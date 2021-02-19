@@ -36,7 +36,12 @@ class ColorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+	    try {
+		    $coche = Coche::create($request->all());
+	    } catch(\Exception $e) {
+            return ['error' => $e->getMessage()];
+	    }
+        return 'Buenas';
     }
 
     /**
@@ -70,7 +75,12 @@ class ColorController extends Controller
      */
     public function update(Request $request, Color $color)
     {
-        
+        try {
+            $color->update($request->all());        
+        } catch(\Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
+        return $color->id;
     }
 
     /**
@@ -81,6 +91,7 @@ class ColorController extends Controller
      */
     public function destroy(Color $color)
     {
-        //
+        $color->delete();
+        return $color->id;
     }
 }
